@@ -1,0 +1,192 @@
+name: Push
+on:
+  workflow_dispatch:
+
+jobs:
+  push:
+    name: push vulsio/${{ matrix.target }}/.git to ghcr.io/vulsio/vuls-data-db:${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - vuls-data-extracted-alma-errata
+          - vuls-data-extracted-alma-osv
+          - vuls-data-extracted-alpine-osv
+          - vuls-data-extracted-alpine-secdb
+          - vuls-data-extracted-amazon
+          - vuls-data-extracted-arch
+          - vuls-data-extracted-cargo-ghsa
+          - vuls-data-extracted-diff-test
+          - vuls-data-extracted-diff-test-archive-1
+          - vuls-data-extracted-eol
+          - vuls-data-extracted-epss
+          - vuls-data-extracted-epss-archive-1
+          - vuls-data-extracted-freebsd
+          - vuls-data-extracted-kev
+          - vuls-data-extracted-mitre-v5
+          - vuls-data-extracted-nvd-api-cve
+          - vuls-data-extracted-oracle
+          - vuls-data-extracted-redhat-csaf
+          - vuls-data-extracted-redhat-csaf-rhel
+          - vuls-data-extracted-redhat-csaf-rhel-archive-1
+          - vuls-data-extracted-redhat-ovalv1
+          - vuls-data-extracted-redhat-ovalv2
+          - vuls-data-extracted-redhat-ovalv2-rhel
+          - vuls-data-extracted-redhat-vex
+          - vuls-data-extracted-redhat-vex-rhel
+          - vuls-data-extracted-rocky-errata
+          - vuls-data-raw-alma-errata
+          - vuls-data-raw-alma-osv
+          - vuls-data-raw-alma-oval
+          - vuls-data-raw-alpine-osv
+          - vuls-data-raw-alpine-secdb
+          - vuls-data-raw-amazon
+          - vuls-data-raw-android-osv
+          - vuls-data-raw-arch
+          - vuls-data-raw-attack
+          - vuls-data-raw-bitnami-osv
+          - vuls-data-raw-capec
+          - vuls-data-raw-cargo-ghsa
+          - vuls-data-raw-cargo-osv
+          - vuls-data-raw-chainguard-osv
+          - vuls-data-raw-composer-ghsa
+          - vuls-data-raw-composer-glsa
+          - vuls-data-raw-composer-osv
+          - vuls-data-raw-conan-glsa
+          - vuls-data-raw-cwe
+          - vuls-data-raw-debian-osv
+          - vuls-data-raw-debian-oval
+          - vuls-data-raw-debian-security-tracker-api
+          - vuls-data-raw-debian-security-tracker-salsa
+          - vuls-data-raw-diff-test
+          - vuls-data-raw-epss
+          - vuls-data-raw-erlang-ghsa
+          - vuls-data-raw-erlang-osv
+          - vuls-data-raw-exploit-exploitdb
+          - vuls-data-raw-exploit-github
+          - vuls-data-raw-exploit-inthewild
+          - vuls-data-raw-exploit-trickest
+          - vuls-data-raw-fedora
+          - vuls-data-raw-fortinet
+          - vuls-data-raw-fortinet-cvrf
+          - vuls-data-raw-freebsd
+          - vuls-data-raw-gentoo
+          - vuls-data-raw-ghactions-osv
+          - vuls-data-raw-git-osv
+          - vuls-data-raw-golang-ghsa
+          - vuls-data-raw-golang-glsa
+          - vuls-data-raw-golang-osv
+          - vuls-data-raw-haskell-osv
+          - vuls-data-raw-jvn-feed-detail
+          - vuls-data-raw-jvn-feed-product
+          - vuls-data-raw-jvn-feed-rss
+          - vuls-data-raw-kev
+          - vuls-data-raw-linux-osv
+          - vuls-data-raw-maven-ghsa
+          - vuls-data-raw-maven-glsa
+          - vuls-data-raw-maven-osv
+          - vuls-data-raw-mitre-cvrf
+          - vuls-data-raw-mitre-v4
+          - vuls-data-raw-mitre-v5
+          - vuls-data-raw-msf
+          - vuls-data-raw-netbsd
+          - vuls-data-raw-npm-ghsa
+          - vuls-data-raw-npm-glsa
+          - vuls-data-raw-npm-osv
+          - vuls-data-raw-nuget-ghsa
+          - vuls-data-raw-nuget-glsa
+          - vuls-data-raw-nuget-osv
+          - vuls-data-raw-nvd-api-cpe
+          - vuls-data-raw-nvd-api-cpematch
+          - vuls-data-raw-nvd-api-cve
+          - vuls-data-raw-nvd-feed-cpe
+          - vuls-data-raw-nvd-feed-cpematch
+          - vuls-data-raw-nvd-feed-cve
+          - vuls-data-raw-oracle
+          - vuls-data-raw-oss-fuzz-osv
+          - vuls-data-raw-pip-ghsa
+          - vuls-data-raw-pip-glsa
+          - vuls-data-raw-pip-osv
+          - vuls-data-raw-pub-ghsa
+          - vuls-data-raw-pub-osv
+          - vuls-data-raw-redhat-csaf
+          - vuls-data-raw-redhat-cve
+          - vuls-data-raw-redhat-cvrf
+          - vuls-data-raw-redhat-osv
+          - vuls-data-raw-redhat-ovalv1
+          - vuls-data-raw-redhat-ovalv2
+          - vuls-data-raw-redhat-repository-to-cpe
+          - vuls-data-raw-redhat-vex
+          - vuls-data-raw-rocky-errata
+          - vuls-data-raw-rocky-osv
+          - vuls-data-raw-r-osv
+          - vuls-data-raw-rubygems-ghsa
+          - vuls-data-raw-rubygems-glsa
+          - vuls-data-raw-rubygems-osv
+          - vuls-data-raw-snort
+          - vuls-data-raw-suse-csaf
+          - vuls-data-raw-suse-csaf-vex
+          - vuls-data-raw-suse-cvrf
+          - vuls-data-raw-suse-cvrf-cve
+          - vuls-data-raw-suse-osv
+          - vuls-data-raw-suse-oval
+          - vuls-data-raw-swift-ghsa
+          - vuls-data-raw-swift-osv
+          - vuls-data-raw-ubuntu-cve-tracker
+          - vuls-data-raw-ubuntu-osv
+          - vuls-data-raw-ubuntu-oval
+          - vuls-data-raw-vulncheck-kev
+          - vuls-data-raw-windows-bulletin
+          - vuls-data-raw-windows-cvrf
+          - vuls-data-raw-windows-msuc
+          - vuls-data-raw-windows-wsusscn2
+          - vuls-data-raw-wolfi-osv
+    steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@v10
+        with:
+          root-reserve-mb: 32768
+          remove-dotnet: "true"
+          remove-android: "true"
+          remove-haskell: "true"
+          remove-codeql: "true"
+          remove-docker-images: "true"
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          repository: vulsio/${{ matrix.target }}
+          fetch-depth: '0'
+
+      - name: Bundle repository
+        run: git bundle create ${{ matrix.target }}.bundle --all
+
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: vulsio
+          repositories: "vuls-data-db"
+
+      - name: Install Oras
+        run: |
+          # https://oras.land/docs/installation/#linux
+          VERSION="1.2.2"
+          curl -LO "https://github.com/oras-project/oras/releases/download/v${VERSION}/oras_${VERSION}_linux_amd64.tar.gz"
+          mkdir -p oras-install/
+          tar -zxf oras_${VERSION}_*.tar.gz -C oras-install/
+          sudo mv oras-install/oras /usr/local/bin/
+          rm -rf oras_${VERSION}_*.tar.gz oras-install/
+
+      - name: Login to GitHub Packages Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: vulsio
+          password: ${{ steps.app-token.outputs.token }}
+
+      - name: Upload vuls.db to GHCR
+        run: |
+          oras push ghcr.io/vulsio/vuls-data-db:${{ matrix.target }} ./${{ matrix.target }}.bundle:application/vnd.vulsio.vuls-data-db.git.layer.v1+bundle
